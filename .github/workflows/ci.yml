@@ -20,6 +20,7 @@ jobs:
       - name: Build
         run: |-
           gcc helloworld.c -o helloworld
+          chmod a+x helloworld
 
       - uses: actions/upload-artifact@v4
         with:
@@ -30,7 +31,7 @@ jobs:
 
   linux-test:
     needs: ['linux-build']
-    name: runit
+    name: linux-test
     continue-on-error: true
     runs-on: ubuntu-22.04
     strategy:
@@ -42,5 +43,4 @@ jobs:
 
       - name: Run
         run: |-
-          chmod a+x helloworld
           ./helloworld
