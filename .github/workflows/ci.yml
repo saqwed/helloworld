@@ -3,7 +3,7 @@ name: helloworld
 on: push
 
 jobs:
-  linux:
+  linux-build:
     name: ubuntu-build
     runs-on: ubuntu-22.04
     steps:
@@ -27,3 +27,19 @@ jobs:
           retention-days: 14
           path: |-
               helloworld
+
+  linux-test:
+    needs: ['linux-build']
+    name: runit
+    continue-on-error: true
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: helloworld_${{ github.sha }}
+
+      - name: Run
+        run: |-
+          ./helloworld
