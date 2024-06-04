@@ -43,4 +43,5 @@ jobs:
 
       - name: Run
         run: |-
+          chmod a+x helloworld
           ./helloworld
